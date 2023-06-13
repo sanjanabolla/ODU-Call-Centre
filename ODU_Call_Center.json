@@ -1,0 +1,1913 @@
+{
+    "description": "ODU Call Center",
+    "states": [
+      {
+        "name": "Trigger",
+        "type": "trigger",
+        "transitions": [
+          {
+            "event": "incomingMessage"
+          },
+          {
+            "next": "Initial",
+            "event": "incomingCall"
+          },
+          {
+            "event": "incomingConversationMessage"
+          },
+          {
+            "event": "incomingRequest"
+          },
+          {
+            "event": "incomingParent"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": -70,
+            "y": -1000
+          }
+        }
+      },
+      {
+        "name": "choose_department",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "check_pressed_number",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "choose_department",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "number_of_digits": 1,
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -60,
+            "y": 110
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "You have reached the CS department.\n\nPress 1 to know the office hours of the faculty.\n\nPress 2 to know about the tutoring services provided.\n\nPress 3 to know the functional timings of the CS buildings.\n\nPress 4 to know and connect with your GPD.\n\nPress 5 to know the facilities offered for the CS students.\n\nPress 6 for repeat all options.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en-US",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "check_pressed_number",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_2",
+            "event": "noMatch"
+          },
+          {
+            "next": "Office_Hours_Faculty",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Tutoring_services",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Functional_timings",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "next": "Know_GPD",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 4",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "next": "Facilities_for_students",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 5",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "5"
+              }
+            ]
+          },
+          {
+            "next": "choose_department",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 6",
+                "arguments": [
+                  "{{widgets.choose_department.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "6"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.choose_department.Digits}}",
+          "offset": {
+            "x": -210,
+            "y": 510
+          }
+        }
+      },
+      {
+        "name": "Office_Hours_Faculty",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "Office_hrs",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Office_Hours_Faculty",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -670,
+            "y": 840
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "To know the office hours of respective faculty.\n\nPress 1 for Doctor Ravi Mukkamala. \n\nPress 2 for Doctor Sampath Jayarathna.\n\nPress 3 for Doctor Jian Wu.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Tutoring_services",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "Dept_Tutor",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Tutoring_services",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 160,
+            "y": 830
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Welcome to CS Department Tutoring services\n\nPress 1 for CS 150.\n\nPress 2 for CS 250.\n\nPress 3 for CS 361.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Functional_timings",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "timings",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Functional_timings",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 980,
+            "y": 850
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Welcome to know about the functional timings of CS buildings at ODU.\n\nPress 1 for Dragas Hall .\n\nPress 2 for ECSB.\n\nPress 3 for Webb Center.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Know_GPD",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "GPD",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Know_GPD",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 1750,
+            "y": 850
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Welcome to know about the Graduate Program Directors.\n\nPress 1 to know who your GPD is.\n\nPress 2 to connect your GPD.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Office_hrs",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_3",
+            "event": "noMatch"
+          },
+          {
+            "next": "Faculty_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Office_Hours_Faculty.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Faculty_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Office_Hours_Faculty.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Faculty_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.Office_Hours_Faculty.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Office_Hours_Faculty.Digits}}",
+          "offset": {
+            "x": -1980,
+            "y": 1090
+          }
+        }
+      },
+      {
+        "name": "Dept_Tutor",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_4",
+            "event": "noMatch"
+          },
+          {
+            "next": "cs_150",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Tutoring_services.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "cs_250",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Tutoring_services.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "cs_361",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.Tutoring_services.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Tutoring_services.Digits}}",
+          "offset": {
+            "x": -180,
+            "y": 1150
+          }
+        }
+      },
+      {
+        "name": "timings",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_5",
+            "event": "noMatch"
+          },
+          {
+            "next": "Timings_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Functional_timings.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Timings_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Functional_timings.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Timings_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.Functional_timings.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Functional_timings.Digits}}",
+          "offset": {
+            "x": 1010,
+            "y": 1210
+          }
+        }
+      },
+      {
+        "name": "Faculty_2",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "send_message_1",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Faculty_2",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -1770,
+            "y": 1790
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Professor would be available on Wednesday from 4 PM to 5 PM virtually.\nTo receive the zoom link please press any key.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Faculty_1",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": -2190,
+            "y": 1800
+          },
+          "loop": 1,
+          "say": "Professor would be available on Monday from 11 AM to 12 Noon and on Wednesday 2 PM to 4 PM.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "send_message_1",
+        "type": "send-message",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": -1750,
+            "y": 2130
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{flow.channel.address}}",
+          "to": "{{contact.channel.address}}",
+          "body": "Here is the link for virtually connecting with Doctor Sampath Jayarathna. \n\nhttp://www.google.com",
+          "media_url": ""
+        }
+      },
+      {
+        "name": "GPD",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_6",
+            "event": "noMatch"
+          },
+          {
+            "next": "GPD_phd_CS",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Know_GPD.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Connect_GPD",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Know_GPD.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Know_GPD.Digits}}",
+          "offset": {
+            "x": 2230,
+            "y": 1220
+          }
+        }
+      },
+      {
+        "name": "GPD_phd_CS",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "GPD_phd",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "GPD_phd_CS",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 1900,
+            "y": 1720
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "If you are studying PHD then Press 1.\n\nIf you are studying MS then Press 2.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "GPD_phd",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_7",
+            "event": "noMatch"
+          },
+          {
+            "next": "GPD_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.GPD_phd_CS.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "GPD_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.GPD_phd_CS.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.GPD_phd_CS.Digits}}",
+          "offset": {
+            "x": 1820,
+            "y": 2670
+          }
+        }
+      },
+      {
+        "name": "Connect_GPD",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "Connection",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Connect_GPD",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 2920,
+            "y": 1700
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "If you want to connect with PHD GPD then Press 1.\n\nIf you want to connect with MS GPD then Press 2.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "Connection",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_8",
+            "event": "noMatch"
+          },
+          {
+            "next": "say_play_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Connect_GPD.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "say_play_4",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Connect_GPD.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Connect_GPD.Digits}}",
+          "offset": {
+            "x": 3030,
+            "y": 2160
+          }
+        }
+      },
+      {
+        "name": "say_play_3",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "send_message_2",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 2960,
+            "y": 2660
+          },
+          "loop": 1,
+          "say": "GPD for PHD program is Yuhong Li and the email address will be sent to you shortly.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "send_message_2",
+        "type": "send-message",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 2880,
+            "y": 2920
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{flow.channel.address}}",
+          "to": "{{contact.channel.address}}",
+          "body": "Below is the email address of Yuhong Li.\n\ny9li@odu.edu\n\nThank You."
+        }
+      },
+      {
+        "name": "say_play_4",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "send_message_3",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 3430,
+            "y": 2670
+          },
+          "loop": 1,
+          "say": "GPD for MS program is Andrew Chernikov and the email address will be sent to you shortly.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "send_message_3",
+        "type": "send-message",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 3400,
+            "y": 2910
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{flow.channel.address}}",
+          "to": "{{contact.channel.address}}",
+          "body": "Below is the email address of Andrew Chernikov.\n\n achernik@odu.edu \n\nThank You."
+        }
+      },
+      {
+        "name": "Initial",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "choose_options",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Initial",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 50,
+            "y": -640
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Welcome to Old Dominion University call center.\n\nPress 1 for CS Department.\nPress 2 for Student Health Services.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en-US",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "choose_options",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_1",
+            "event": "noMatch"
+          },
+          {
+            "next": "choose_department",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.Initial.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Student_services",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.Initial.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.Initial.Digits}}",
+          "offset": {
+            "x": 50,
+            "y": -330
+          }
+        }
+      },
+      {
+        "name": "Student_services",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "connect_call_2",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "Student_services",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 450,
+            "y": 100
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "You have reached Student Health Services.\n\nPlease press any key to connect with our representative.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "speech_model": "",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "connect_call_2",
+        "type": "connect-call-to",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "callCompleted"
+          },
+          {
+            "event": "hangup"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 920,
+            "y": 120
+          },
+          "caller_id": "{{contact.channel.address}}",
+          "noun": "number",
+          "to": "7573396308",
+          "timeout": 30
+        }
+      },
+      {
+        "name": "gather_1",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_1",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_1",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -620,
+            "y": -70
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_1",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_1",
+            "event": "noMatch"
+          },
+          {
+            "next": "choose_department",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_1.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Student_services",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_1.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_1.Digits}}",
+          "offset": {
+            "x": -890,
+            "y": 160
+          }
+        }
+      },
+      {
+        "name": "gather_2",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_2",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_2",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -1110,
+            "y": 420
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_2",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_2",
+            "event": "noMatch"
+          },
+          {
+            "next": "Office_Hours_Faculty",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_2.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Tutoring_services",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_2.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Functional_timings",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.gather_2.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "next": "Know_GPD",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 4",
+                "arguments": [
+                  "{{widgets.gather_2.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "4"
+              }
+            ]
+          },
+          {
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 5",
+                "arguments": [
+                  "{{widgets.gather_2.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "5"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_2.Digits}}",
+          "offset": {
+            "x": -1590,
+            "y": 660
+          }
+        }
+      },
+      {
+        "name": "gather_3",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_3",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_3",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -2580,
+            "y": 1080
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_3",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_3",
+            "event": "noMatch"
+          },
+          {
+            "next": "Faculty_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_3.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Faculty_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_3.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Faculty_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.gather_3.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_3.Digits}}",
+          "offset": {
+            "x": -2770,
+            "y": 1310
+          }
+        }
+      },
+      {
+        "name": "gather_4",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_4",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_4",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": -970,
+            "y": 1110
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Pleas enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_4",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_4",
+            "event": "noMatch"
+          },
+          {
+            "next": "cs_150",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_4.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "cs_250",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_4.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "cs_361",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.gather_4.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_4.Digits}}",
+          "offset": {
+            "x": -1130,
+            "y": 1320
+          }
+        }
+      },
+      {
+        "name": "gather_5",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_5",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_5",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 530,
+            "y": 1130
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_5",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_5",
+            "event": "noMatch"
+          },
+          {
+            "next": "Timings_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_5.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Timings_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_5.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          },
+          {
+            "next": "Timings_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 3",
+                "arguments": [
+                  "{{widgets.gather_5.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "3"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_5.Digits}}",
+          "offset": {
+            "x": 430,
+            "y": 1350
+          }
+        }
+      },
+      {
+        "name": "gather_6",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_6",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_6",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 1650,
+            "y": 1150
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_6",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_6",
+            "event": "noMatch"
+          },
+          {
+            "next": "GPD_phd_CS",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_6.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "Connect_GPD",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_6.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_6.Digits}}",
+          "offset": {
+            "x": 1650,
+            "y": 1370
+          }
+        }
+      },
+      {
+        "name": "gather_7",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_7",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_7",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 1120,
+            "y": 2680
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_7",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_7",
+            "event": "noMatch"
+          },
+          {
+            "next": "GPD_1",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_7.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "GPD_2",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_7.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_7.Digits}}",
+          "offset": {
+            "x": 1000,
+            "y": 2940
+          }
+        }
+      },
+      {
+        "name": "gather_8",
+        "type": "gather-input-on-call",
+        "transitions": [
+          {
+            "next": "split_8",
+            "event": "keypress"
+          },
+          {
+            "event": "speech"
+          },
+          {
+            "next": "gather_8",
+            "event": "timeout"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "speech_timeout": "auto",
+          "offset": {
+            "x": 2500,
+            "y": 2170
+          },
+          "loop": 1,
+          "finish_on_key": "#",
+          "say": "Please enter a valid input.",
+          "language": "en-US",
+          "stop_gather": true,
+          "gather_language": "en",
+          "profanity_filter": "true",
+          "timeout": 5
+        }
+      },
+      {
+        "name": "split_8",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "gather_8",
+            "event": "noMatch"
+          },
+          {
+            "next": "say_play_3",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 1",
+                "arguments": [
+                  "{{widgets.gather_8.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "1"
+              }
+            ]
+          },
+          {
+            "next": "say_play_4",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to 2",
+                "arguments": [
+                  "{{widgets.gather_8.Digits}}"
+                ],
+                "type": "equal_to",
+                "value": "2"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.gather_8.Digits}}",
+          "offset": {
+            "x": 2370,
+            "y": 2410
+          }
+        }
+      },
+      {
+        "name": "Thank_you_message",
+        "type": "send-message",
+        "transitions": [
+          {
+            "event": "sent"
+          },
+          {
+            "event": "failed"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": -100,
+            "y": 3760
+          },
+          "service": "{{trigger.message.InstanceSid}}",
+          "channel": "{{trigger.message.ChannelSid}}",
+          "from": "{{flow.channel.address}}",
+          "to": "{{contact.channel.address}}",
+          "body": "Thank you for reaching the Old Dominion University Help Center. If you have any further queries. \nPlease contact via our email address : odu@odu.edu"
+        }
+      },
+      {
+        "name": "Faculty_3",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": -1320,
+            "y": 1800
+          },
+          "loop": 1,
+          "say": "Professor would be available on Monday from 11 AM to 12 Noon.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "cs_150",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": -900,
+            "y": 1800
+          },
+          "loop": 1,
+          "say": "You have reached Problem solving and Programming Lab tutoring service. \nThey are offered on every Wednesday in Dragas Hall at 1103C room from 11 AM to 12 Noon.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "cs_250",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": -530,
+            "y": 1800
+          },
+          "loop": 1,
+          "say": "You have reached Problem solving and Advance Programming Lab tutoring service. \nThey are offered on every Monday in Dragas Hall at 1103C room from 11 AM to 3 PM.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "cs_361",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": -180,
+            "y": 1810
+          },
+          "loop": 1,
+          "say": "You have reached Problem solving and Advance Programming Lab tutoring service. \nThey are offered on every Monday in Dragas Hall at 1103C room from 11 AM to 3 PM.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "Timings_1",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 560,
+            "y": 2020
+          },
+          "loop": 1,
+          "say": "Dragas Hall is open on all days from 8 AM to 12 AM and will be closed on Weekends.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "Timings_2",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 980,
+            "y": 2010
+          },
+          "loop": 1,
+          "say": "ECSB is open on all days from 8 AM to 12 AM and will be closed on Weekends.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "Timings_3",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 1370,
+            "y": 2020
+          },
+          "loop": 1,
+          "say": "Webb Center is open on all days from 8 AM to 12 AM.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "GPD_1",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 1520,
+            "y": 3720
+          },
+          "loop": 1,
+          "say": "If you belong to Computer Science and pursuing your PHD then your GPD is Yuhong Li.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "GPD_2",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 2000,
+            "y": 3710
+          },
+          "loop": 1,
+          "say": "If you belong to Computer Science and pursuing your MS then your GPD is Andrew Chernikov.",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "Facilities_for_students",
+        "type": "say-play",
+        "transitions": [
+          {
+            "next": "Thank_you_message",
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "man",
+          "offset": {
+            "x": 2620,
+            "y": 840
+          },
+          "loop": 1,
+          "say": "1. As a CS student you will be having access to the open research lab which is a public computing lab for CS students. It is located in E&CS block, Room 3104.\n2. You will be given access to the virtual computer Lab. It is a group of virtual servers which CS students can remote into from anywhere in the world the Link to access it is vcportal.odu.edu or move.odu.edu.\n3. There is CS systems group which helps the students solving technical issues.",
+          "language": "en-US"
+        }
+      }
+    ],
+    "initial_state": "Trigger",
+    "flags": {
+      "allow_concurrent_calls": true
+    }
+  }
